@@ -51,6 +51,10 @@ export const App = () => {
     won === true && reset();
   }, [won]);
 
+  useEffect(() => {
+    shuffle()
+  }, [])
+
   // updates best score to current score if current is bigger
   useEffect(() => {
     currentScore > bestScore && setBestScore(currentScore);
