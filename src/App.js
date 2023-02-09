@@ -119,7 +119,7 @@ export const App = () => {
       <h3>Best score: {bestScore}</h3>
       <h3>Current score: {currentScore}</h3>
       {matched === false && won === false ? (
-        <h3>Click everyone once</h3>
+        <h3 className="advice">Click everyone once</h3>
       ) : matched === true ? (
         <h3>Game over</h3>
       ) : (
