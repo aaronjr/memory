@@ -1,60 +1,43 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-unused-expressions */
-import { click } from "@testing-library/user-event/dist/click";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { Card } from "./card";
 
 export const App = () => {
+
   // state for scoreboard
   const [currentScore, setCurrentScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
 
   // state for winning
-  const [won, setWon] = useState(false)
+  const [won, setWon] = useState(false);
+
+  // state for matched cards
+  const [matched, setMatched] = useState(false);
+
+  // selected cards array
+  const [selected, setSelected] = useState([]);
+
+  // cards in deck, 9 unique symbols
+  const [cards, setCards] = useState([
+    "!",
+    "@",
+    "£",
+    "$",
+    "%",
+    "^",
+    "&",
+    "*",
+    "?",
+  ]);
 
   // shuffled state
   const [shuffled, setShuffled] = useState(false);
 
-  // array of selected cards
-  const [selected, setSelected] = useState([]);
-
-  // temp selected
-  const [tempSelected, setTempSelected] = useState([]);
-
-  // true or false for matched cards
-  const [matched, setMatched] = useState(false);
-
-  // cards in deck
-  const [cards, setCards] = useState([]);
-
   // allow click
   const [clickable, setClickable] = useState(true);
-
-  const symbols = ["!","@","£","$","%","^","&","*","?"]
-  // temp array - not in state due to re-rendering
-  const theCards = [];
-
-  // loop through 9 photos add to temp array
-  for (let i = 0; i < 9; i++) {
-    theCards.push(symbols[i]);
-  }
-
-  // add temp array to state but only once
-  useEffect(() => {
-    setCards(theCards);
-  }, []);
-
-  // waits for new card added to selected and checks it hasn't already been selected.
-  // updates matched as true if duplicate in selected array
-  useEffect(() => {
-    const set = [...new Set(selected)];
-    setCurrentScore(selected.length)
-    // check for length. Set only returns unique items in an array
-    set.length !== selected.length ?
-      setMatched(true) :
-      setMatched(false)
-  }, [selected]);
 
   // add temp array to state on complete
   useEffect(() => {
@@ -62,24 +45,33 @@ export const App = () => {
     // setTimeout(() => reset(), 2000)
   }, [matched]);
 
-  useEffect(() => {
-    currentScore > bestScore && setBestScore(currentScore);
-  },[currentScore])
-
   // check for a win
   // improve what happens after
-  useEffect(()=>{
-    won === true && reset()
-  }, [won])
-
-  // check if user has won, if not add card to main selection array
   useEffect(() => {
-    const set = [...new Set(tempSelected)];
-    set.length === 9 ? setWon(true) : setWon(false);
-    // add card to selected cards array
-    tempSelected[tempSelected.length - 1] !== undefined &&
-      setSelected([...selected, tempSelected[tempSelected.length - 1]]);
-  }, [tempSelected])
+    won === true && reset();
+  }, [won]);
+
+  // updates best score to current score if current is bigger
+  useEffect(() => {
+    currentScore > bestScore && setBestScore(currentScore);
+  }, [currentScore]);
+
+  useEffect(() => {
+    // create a set
+    const set = [...new Set(selected)];
+    // check for length
+    if (selected.length === set.length) {
+      // if same length, there are no matches
+      setMatched(false);
+      // set scrore, with set of length
+      setCurrentScore(set.length);
+      // if 9 unique items, user has won
+      set.length === 9 ? setWon(true) : setWon(false);
+    } else {
+      // if lengths don't match there must be a duplicate
+      setMatched(true);
+    }
+  }, [selected]);
 
   // useEffects above
   // ---------------
@@ -89,19 +81,8 @@ export const App = () => {
   const cardClick = (src) => {
     // shuffle cards
     shuffle();
-    setTempSelected([...tempSelected, src]);
-  };
-  
-  // rest selected cards
-  const reset = () => {
-    setClickable(false);
-    setTimeout(() => {
-      setSelected([]);
-      setTempSelected([]);
-      setMatched(false);
-      setWon(false);
-      setClickable(true);
-    }, 1500);
+    // add card to array of selected cards
+    setSelected([...selected, src]);
   };
 
   // shuffle cards, render page
@@ -110,6 +91,17 @@ export const App = () => {
     setCards(cards.sort(() => Math.random() - 0.5));
     // updates render
     setShuffled(shuffled === true ? false : true);
+  };
+
+  // rest selected cards
+  const reset = () => {
+    setClickable(false);
+    setTimeout(() => {
+      setSelected([]);
+      setMatched(false);
+      setWon(false);
+      setClickable(true);
+    }, 1500);
   };
 
   return (
