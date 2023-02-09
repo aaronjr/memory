@@ -22,15 +22,15 @@ export const App = () => {
 
   // cards in deck, 9 unique symbols
   const [cards, setCards] = useState([
-    "!",
-    "@",
-    "£",
-    "$",
-    "%",
-    "^",
-    "&",
-    "*",
-    "?",
+    "https://upload.wikimedia.org/wikipedia/en/0/0b/Marge_Simpson.png",
+    "https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png",
+    "https://upload.wikimedia.org/wikipedia/en/e/ec/Lisa_Simpson.png",
+    "https://upload.wikimedia.org/wikipedia/en/9/9d/Maggie_Simpson.png",
+    "https://upload.wikimedia.org/wikipedia/en/5/56/Mr_Burns.png",
+    "https://upload.wikimedia.org/wikipedia/en/3/3a/Seymour_Skinner.png",
+    "https://upload.wikimedia.org/wikipedia/en/3/3e/Abe_Simpson.png",
+    "https://upload.wikimedia.org/wikipedia/en/5/5a/Krustytheclown.png",
+    "https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_2006.png",
   ]);
 
   // shuffled state
@@ -119,7 +119,7 @@ export const App = () => {
       <h3>Best score: {bestScore}</h3>
       <h3>Current score: {currentScore}</h3>
       {matched === false && won === false ? (
-        <h3>Still in</h3>
+        <h3>Click everyone once</h3>
       ) : matched === true ? (
         <h3>Game over</h3>
       ) : (

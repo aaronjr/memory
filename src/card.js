@@ -7,7 +7,7 @@ export const Card = props => {
   // const src = props.img
   return (
     <div className="card" onClick={() => clickCard(props.image)}>
-      <h1>{props.image}</h1>
+      <img src={props.image} alt="Simpson character"></img>
     </div>
-  )
+  );
 }

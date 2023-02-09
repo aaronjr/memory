@@ -1,15 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
+
+#root{
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/98/The_Simpsons_yellow_logo.svg");
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  /* Do not repeat the image */
+  background-size: cover;
+  /* Resize the background image to cover the entire container */
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  font-family: 'Rock Salt', cursive;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
 .container{
+  width: 60%;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 }
 
 .card{
-    border: solid black 1px;
-    display: grid;
-    place-items: center;
-    margin: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: solid black 2px;
+  display: grid;
+  place-items: center;
+  margin: 10px;
+  padding: 10px;
+}
+
+img{
+  height: 200px;
+  width: auto;
 }
 .card:hover{
   cursor: pointer;
+}
+
+h3{
+  text-align: center;
 }
